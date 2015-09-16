@@ -1,0 +1,31 @@
+var express=require('express');
+var app = express();
+var root = global.process.env.PWD;
+var f = require('./functions.js');
+
+// Regex matches /anyword or /dev/anyword, but not /anyword/anyword
+// (trailing slash optional)
+app.get(/^(\/dev)?\/\w+\/?$/, function(req, res) {
+  f.log(new Date());
+  res.sendFile(root + '/public/index.html');
+});
+
+// Regex matches /anyword/entries or /dev/anyword/entries. Trailing / optional.
+app.get(/^(\/dev)?\/\w+\/entries\/?/, function(req, res) {
+  res.json({user: 'dan'});
+});
+
+// Regex matches /anyword/static or /dev/anyword/static.
+app.use(/^(\/dev)?\/\w+\/static/, express.static(root + '/public'));
+
+app.get(/globalprocess/, function(req, res) {
+  var output = '';
+  var objectToExamine = global.process;
+  for (var property in objectToExamine) {
+    output += property + ': ' + objectToExamine[property]+';<br />';
+  }
+  
+  res.send(output);
+});
+
+var server = app.listen(3000);
