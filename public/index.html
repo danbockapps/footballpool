@@ -1,9 +1,31 @@
-<html>
-  <head>
-    <title>Home page</title>
-  </head>
-  <body>
-    <h1>index.html</h1>
-  </body>
+<html ng-app="footballpool">
+<head>
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+  >
 
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+
+  <title>Football Pool</title>
+</head>
+
+<body ng-controller="MainCtrl as ctrl">
+
+{{testMsg}}
+
+<script
+  src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"
+></script>
+<script
+  src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"
+></script>
+<script
+  src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"
+></script>
+<!-- TODO this fails when there's not a trailing slash in the URL -->
+<script src="static/app.js"></script>
+</body>
 </html>
