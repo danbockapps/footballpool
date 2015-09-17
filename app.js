@@ -4,8 +4,14 @@ var root = global.process.env.PWD;
 var f = require('./functions.js');
 
 // Regex matches /anyword or /dev/anyword, but not /anyword/anyword
-// (trailing slash optional)
-app.get(/^(\/dev)?\/\w+\/?$/, function(req, res) {
+// No trailing slash. Redirect to trailing slash.
+app.get(/^(\/dev)?\/\w+$/, function(req, res) {
+  res.redirect(global.process.env.REQUEST_URI + '/');
+});
+
+// Regex matches /anyword or /dev/anyword, but not /anyword/anyword
+// (trailing slash required)
+app.get(/^(\/dev)?\/\w+\/$/, function(req, res) {
   f.log(new Date());
   res.sendFile(root + '/public/index.html');
 });
@@ -20,7 +26,7 @@ app.use(/^(\/dev)?\/\w+\/static/, express.static(root + '/public'));
 
 app.get(/globalprocess/, function(req, res) {
   var output = '';
-  var objectToExamine = global.process;
+  var objectToExamine = global.process.env;
   for (var property in objectToExamine) {
     output += property + ': ' + objectToExamine[property]+';<br />';
   }
