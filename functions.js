@@ -11,8 +11,8 @@ module.exports = {
   }
 };
 
-function Entry(teamName, points) {
-  this.teamName = teamName;
+function Entry(name, points) {
+  this.name = name;
   this.points = points;
 }
 
