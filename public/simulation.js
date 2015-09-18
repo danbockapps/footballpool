@@ -1,5 +1,5 @@
 var iter = 1000;
-var gamesRemaining = 256;
+var gamesRemaining;
 var entries = [];
 
 function Entry(name, points, numEntries) {
@@ -17,8 +17,10 @@ Entry.prototype.resetPoints = function() {
 }
 
 function runSimulation(data) {
-  data.forEach(function(element) {
-    entries.push(new Entry(element.name, element.points, data.length));
+  gamesRemaining = data.gamesRemaining;
+  
+  data.entries.forEach(function(element) {
+    entries.push(new Entry(element.name, element.points, data.entries.length));
   });
 
   for(var i=0; i<iter; i++) {
@@ -26,8 +28,8 @@ function runSimulation(data) {
   }
   
   entries.sort(function(a, b) {
-    if(a.points < b.points) return 1;
-    if(a.points > b.points) return -1;
+    if(a.places[0] < b.places[0]) return 1;
+    if(a.places[0] > b.places[0]) return -1;
     return 0;
   });
   

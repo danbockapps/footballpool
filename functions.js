@@ -1,12 +1,16 @@
 var fs = require('fs');
+var config = require('./config');
 var exec = require('child_process').exec;
 
 module.exports = {
   log: log,
 
   getEntries: function(res) {
-    exec('./curl.sh', function(error, stdout, stderr) {
-      res.json(remainingEntries(stdout));
+    exec('./curlstatic.sh', function(error, stdout, stderr) {
+      res.json({
+        gamesRemaining: gamesRemaining(stdout),
+        entries: parseEntries(stdout)
+      });
     });
   }
 };
@@ -20,7 +24,17 @@ function log(string) {
   fs.appendFileSync('../log.txt', string + '\n');
 }
 
-function remainingEntries(html) {
+function gamesRemaining(html) {
+  var recStart = html.search(/\d+-\d+<\/td>/);
+  var recLen = html.substr(recStart).search(/<\/td>/);
+  var recString = html.substr(recStart, recLen)
+  
+  var wins = recString.substr(0, recString.indexOf('-'));
+  var losses = recString.substr(recString.indexOf('-') + 1);
+  return 267 - (Number(wins) + Number(losses)) - config.pushesSoFar;
+}
+
+function parseEntries(html) {
   var spanPos = html.indexOf('<span class="team-name">');
   
   if(spanPos === -1) {
@@ -37,5 +51,5 @@ function remainingEntries(html) {
   var points = html.substr(pointsStart, pointsLen + 1);
   
   return [new Entry(name, Number(points))].concat(
-    remainingEntries(html.substr(pointsStart + pointsLen)));
+    parseEntries(html.substr(pointsStart + pointsLen)));
 }
