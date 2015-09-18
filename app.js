@@ -17,8 +17,8 @@ app.get(/^(\/dev)?\/\w+\/$/, function(req, res) {
 });
 
 // Regex matches /anyword/entries or /dev/anyword/entries. Trailing / optional.
-app.get(/^(\/dev)?\/\w+\/entries\/?/, function(req, res) {
-  res.json({user: 'dan'});
+app.get(/^(\/dev)?\/\w+\/entries\/?$/, function(req, res) {
+  f.getEntries(res);
 });
 
 // Regex matches /anyword/static or /dev/anyword/static.
