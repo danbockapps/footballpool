@@ -16,7 +16,11 @@ Entry.prototype.resetPoints = function() {
   this.simPoints = this.points;
 }
 
-function runSimulation(data) {
+Entry.prototype.pctDisplay = function(place) {
+  return this.places[place] / iter;
+}
+
+function runSimulation(data, $rootScope) {
   gamesRemaining = data.gamesRemaining;
   
   data.entries.forEach(function(element) {
@@ -32,10 +36,8 @@ function runSimulation(data) {
     if(a.places[0] > b.places[0]) return -1;
     return 0;
   });
-  
-  entries.forEach(function(e) {
-    console.log(e.places[0] * 100 / iter + '%   ' + e.points + '   ' + e.name);
-  });
+
+  $rootScope.$broadcast('simulation-done', entries);
 }
 
 function simulateSeason() {

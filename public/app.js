@@ -1,10 +1,12 @@
 var app = angular.module('footballpool', []);
 
-function MainCtrl($scope, $http) {
-  $scope.testMsg = 'Hello world';
-  
+function MainCtrl($scope, $http, $rootScope) {
   $http.get('entries').then(function(response) {
-    runSimulation(response.data);
+    runSimulation(response.data, $rootScope);
+  });
+  
+  $scope.$on('simulation-done', function(event, args) {
+    $scope.displayData = entries;
   });
 }
 
