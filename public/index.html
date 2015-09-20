@@ -40,7 +40,7 @@
           {{d.points}}
         </td>
         <td>
-          {{(d.places[0] * 100 / iter).toFixed(2)}}%
+          {{iter > 0 ? (d.places[0] * 100 / iter).toFixed(2) : '0.00'}}%
         </td>
       </tr>
     </table>
