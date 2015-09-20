@@ -17,6 +17,9 @@
 <div class="row">
   <div class="col-md-3"></div>
   <div class="col-md-6">
+    <div class="text-center" style="margin: 1em">
+      Simulations: {{iter}}
+    </div>
     <table class="table">
       <tr>
         <th>
@@ -29,7 +32,7 @@
           Win %
         </th>
       </tr>
-      <tr ng-repeat="d in displayData">
+      <tr ng-repeat="d in entries|orderBy:'-places[0]'">
         <td>
           {{d.name}}
         </td>
@@ -37,7 +40,7 @@
           {{d.points}}
         </td>
         <td>
-          {{d.pctDisplay(0)}}
+          {{(d.places[0] * 100 / iter).toFixed(2)}}%
         </td>
       </tr>
     </table>
@@ -55,6 +58,5 @@
   src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"
 ></script>
 <script src="static/app.js"></script>
-<script src="static/simulation.js"></script>
 </body>
 </html>
