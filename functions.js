@@ -6,7 +6,7 @@ module.exports = {
   log: log,
 
   getEntries: function(res) {
-    exec('./curlstatic.sh', function(error, stdout, stderr) {
+    exec('./curl.sh', function(error, stdout, stderr) {
       res.json({
         gamesRemaining: gamesRemaining(stdout),
         entries: parseEntries(stdout)

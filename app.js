@@ -12,7 +12,7 @@ app.get(/^(\/dev)?\/\w+$/, function(req, res) {
 // Regex matches /anyword or /dev/anyword, but not /anyword/anyword
 // (trailing slash required)
 app.get(/^(\/dev)?\/\w+\/$/, function(req, res) {
-  f.log(new Date());
+  f.log(new Date() + ' ' + global.process.env.REMOTE_ADDR);
   res.sendFile(root + '/public/index.html');
 });
 
