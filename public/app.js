@@ -3,6 +3,7 @@ var app = angular.module('footballpool', []);
 function MainCtrl($scope, $http, $rootScope, $interval) {
   $scope.entries = [];
   $scope.iter = 0;
+  $scope.paused = false;
   
   var simStart;
   var startTime;
@@ -16,27 +17,23 @@ function MainCtrl($scope, $http, $rootScope, $interval) {
       );
     });
     
-    simStart = new Date().getTime();
+    $scope.simStart = new Date().getTime();
     
     $interval(function() {
-      startTime = new Date().getTime();
-  
-      while(new Date().getTime() < startTime + 1000) {
-        $scope.iter++;
-        simulateSeason($scope.entries, gamesRemaining);
+      if(!$scope.paused) {
+        $scope.startTime = new Date().getTime();
+    
+        while(new Date().getTime() < $scope.startTime + 1000) {
+          $scope.iter++;
+          simulateSeason($scope.entries, gamesRemaining);
+        }
       }
     }, 1000, 600);
     
   });
   
   $scope.perSecond = function() {
-    if(startTime && simStart) {
-      return Math.round($scope.iter * 1000 / (startTime - simStart));
-    }
-    else {
-      // One or both is undefined. Don't return NaN.
-      return 0;
-    }
+    return Math.round($scope.iter * 1000 / ($scope.startTime - $scope.simStart));
   }
   
   function Entry(name, points, numEntries) {
