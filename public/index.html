@@ -18,18 +18,23 @@
   <div class="col-md-3"></div>
   <div class="col-md-6">
     <div class="text-center" style="margin: 1em">
-      Simulations: {{iter}}
-      <span ng-show="simStart && startTime" style="color: gray; font-size: 80%">
-        ({{perSecond()}} / sec)
-      </span>
-      <span ng-hide="simStart && startTime">
-        <img src="static/spinner.gif" />
-      </span>
-      
-      <a class="btn btn-default" ng-click="paused = !paused">
-        <span ng-show="paused" class="glyphicon glyphicon-play"></span>
-        <span ng-hide="paused" class="glyphicon glyphicon-pause"></span>
-      </a>
+      <p>
+        Games remaining: {{gamesRemaining}}
+      </p>
+      <p>
+        Simulations: {{iter}}
+        <span ng-show="simStart && startTime" style="color: gray; font-size: 80%">
+          ({{perSecond()}} / sec)
+        </span>
+        <span ng-hide="simStart && startTime">
+          <img src="static/spinner.gif" />
+        </span>
+        
+        <a class="btn btn-default" ng-click="paused = !paused">
+          <span ng-show="paused" class="glyphicon glyphicon-play"></span>
+          <span ng-hide="paused" class="glyphicon glyphicon-pause"></span>
+        </a>
+      </p>
     </div>
     <table class="table">
       <tr>
@@ -38,6 +43,9 @@
         </th>
         <th>
           Points
+        </th>
+        <th>
+          Wins
         </th>
         <th>
           Win %
@@ -49,6 +57,9 @@
         </td>
         <td>
           {{d.points}}
+        </td>
+        <td>
+          {{d.places[0]}}
         </td>
         <td>
           {{iter > 0 ? (d.places[0] * 100 / iter).toFixed(2) : '0.00'}}%

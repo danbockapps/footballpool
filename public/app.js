@@ -10,7 +10,7 @@ function MainCtrl($scope, $http, $rootScope, $interval) {
   var gamesRemaining;
 
   $http.get('entries').then(function(response) {
-    gamesRemaining = response.data.gamesRemaining;
+    $scope.gamesRemaining = response.data.gamesRemaining;
     response.data.entries.forEach(function(element) {
       $scope.entries.push(
         new Entry(element.name, element.points, response.data.entries.length)
@@ -25,7 +25,7 @@ function MainCtrl($scope, $http, $rootScope, $interval) {
     
         while(new Date().getTime() < $scope.startTime + 1000) {
           $scope.iter++;
-          simulateSeason($scope.entries, gamesRemaining);
+          simulateSeason($scope.entries, $scope.gamesRemaining);
         }
       }
     }, 1000, 600);
